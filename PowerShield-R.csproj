@@ -19,6 +19,14 @@
 	</ItemGroup>
 
 	<Target Name="GenerateBuildDate" BeforeTargets="BeforeCompile">
+
+		<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+			<OutputType>Exe</OutputType>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Configuration)'=='Release'">
+			<OutputType>WinExe</OutputType>
+		</PropertyGroup>
+
 		<PropertyGroup>
 			<BuildTimestamp>$([System.DateTime]::UtcNow.ToString("yyMMddHHmm"))</BuildTimestamp>
 		</PropertyGroup>
@@ -27,10 +35,7 @@
 			<Compile Include="$(IntermediateOutputPath)BuildInfo.g.cs" />
 		</ItemGroup>
 
-		<WriteLinesToFile
-			File="$(IntermediateOutputPath)BuildInfo.g.cs"
-			Lines="namespace PowerShield_R%3B public static class BuildInfo { public const string BUILD = &quot;$(BuildTimestamp)&quot;%3B }"
-			Overwrite="true" />
+		<WriteLinesToFile File="$(IntermediateOutputPath)BuildInfo.g.cs" Lines="namespace PowerShield_R%3B public static class BuildInfo { public const string BUILD = &quot;$(BuildTimestamp)&quot;%3B }" Overwrite="true" />
 	</Target>
 
 </Project>
